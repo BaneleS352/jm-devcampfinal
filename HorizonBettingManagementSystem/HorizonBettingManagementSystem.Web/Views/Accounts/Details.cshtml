@@ -1,0 +1,81 @@
+﻿@model HorizonBettingManagementSystem.Web.Models.Account
+
+<div class="container mt-4">
+
+    <h2>Account Details</h2>
+
+    <div class="mb-2">
+        <strong>Account Number:</strong> @Model.AccountNumber
+    </div>
+
+    <div class="mb-2">
+        <strong>Balance:</strong> @Model.Balance
+    </div>
+
+    <div class="mb-2">
+        <strong>Status:</strong> @(Model.IsClosed ? "Closed" : "Active")
+    </div>
+
+    <div class="mb-2">
+        <strong>Created:</strong> @Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")
+    </div>
+
+    <div class="mb-2">
+        <strong>Client:</strong>
+        @if (Model.Client != null)
+        {
+            @Model.Client.FirstName @Model.Client.LastName
+        }
+        else
+        {
+            <span>Client not loaded</span>
+        }
+    </div>
+
+    <hr />
+
+    <h4>Transactions</h4>
+
+    @if (Model.Transactions != null && Model.Transactions.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var t in Model.Transactions)
+                {
+                    <tr>
+                        <td>@t.TransactionType</td>
+                        <td>@t.Amount</td>
+                        <td>@t.TransactionDate.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No transactions found.</p>
+    }
+
+    <hr />
+
+    <a href="/Transactions/Create?accountId=@Model.AccountId" class="btn btn-success">
+        Add Transaction
+    </a>
+
+    <a href="/Accounts/Edit/@Model.AccountId" class="btn btn-primary">Edit</a>
+
+    <a href="/Accounts/Delete/@Model.AccountId" class="btn btn-danger">Delete</a>
+
+    <a href="/Clients/Details/@Model.ClientId" class="btn btn-secondary">
+        Back to Client
+    </a>
+
+</div>
+``

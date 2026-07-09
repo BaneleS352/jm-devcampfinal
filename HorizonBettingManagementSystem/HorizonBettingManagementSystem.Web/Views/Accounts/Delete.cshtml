@@ -1,0 +1,27 @@
+﻿@model HorizonBettingManagementSystem.Web.Models.Account
+
+<div class="container mt-4">
+
+    <h3>Delete Account</h3>
+
+    <p>Are you sure you want to delete this account?</p>
+
+    <div>
+        <strong>@Model.AccountNumber</strong><br />
+        Balance: @Model.Balance
+    </div>
+
+    <form method="post" action="/Accounts/DeleteConfirmed">
+
+        <!-- MUST MATCH PARAM NAME 'id' -->
+        <input type="hidden" name="id" value="@Model.AccountId" />
+
+        <button type="submit" class="btn btn-danger">Delete</button>
+
+        <a href="/Accounts/Details/@Model.AccountId" class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</div>

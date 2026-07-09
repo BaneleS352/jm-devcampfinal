@@ -1,0 +1,72 @@
+﻿@model HorizonBettingManagementSystem.Web.Models.Client
+
+<div class="container mt-4">
+
+    <h2 class="page-title mb-3">Client Details</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="row mb-2">
+                <div class="col-sm-3 fw-bold">ID Number</div>
+                <div class="col-sm-9">@Model.IdNumber</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-sm-3 fw-bold">Full Name</div>
+                <div class="col-sm-9">@Model.FirstName @Model.LastName</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-sm-3 fw-bold">Created Date</div>
+                <div class="col-sm-9">@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")</div>
+            </div>
+
+            <hr />
+
+            <div class="d-flex justify-content-between">
+                <a href="/Clients" class="btn btn-secondary">Back</a>
+                <a href="/Clients/Edit/@Model.ClientId" class="btn btn-warning">Edit</a>
+            </div>
+
+            <hr />
+
+            <h4>Accounts</h4>
+
+
+
+    @if (Model.Accounts != null && Model.Accounts.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Account Number</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var acc in Model.Accounts)
+                {
+                    <tr>
+                        <td>@acc.AccountNumber</td>
+                        <td>@acc.Balance</td>
+                        <td>@(acc.IsClosed ? "Closed" : "Active")</td>
+                        <td>
+                            <a>/Accounts/Details/@acc.AccountId/View</a>
+                            <a>/Accounts/Edit/@acc.AccountId/Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No accounts found for this client.</p>
+    }
+            </div>
+        </div>
+
+</div>

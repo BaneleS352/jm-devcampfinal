@@ -1,0 +1,67 @@
+﻿@model HorizonBettingManagementSystem.Web.Models.Client
+
+<div class="container mt-4">
+
+    <h2>Edit Client</h2>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <strong>Please correct the following errors:</strong>
+            <ul>
+                @foreach (var entry in ViewData.ModelState.Values)
+                {
+                    foreach (var error in entry.Errors)
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+
+    <form method="post" action="/Clients/Edit">
+
+        <input type="hidden" name="ClientId" value="@Model.ClientId" />
+        <input type="hidden" name="CreatedDate" value="@Model.CreatedDate" />
+
+        <div class="mb-3">
+            <label>ID Number</label>
+            <input name="IdNumber" value="@Model.IdNumber" class="form-control" />
+            @if (ViewData.ModelState["IdNumber"]?.Errors.Count > 0)
+            {
+                <div class="text-danger">
+                    @ViewData.ModelState["IdNumber"].Errors[0].ErrorMessage
+                </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label>First Name</label>
+            <input name="FirstName" value="@Model.FirstName" class="form-control" />
+            @if (ViewData.ModelState["FirstName"]?.Errors.Count > 0)
+            {
+                <div class="text-danger">
+                    @ViewData.ModelState["FirstName"].Errors[0].ErrorMessage
+                </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label>Last Name</label>
+            <input name="LastName" value="@Model.LastName" class="form-control" />
+            @if (ViewData.ModelState["LastName"]?.Errors.Count > 0)
+            {
+                <div class="text-danger">
+                    @ViewData.ModelState["LastName"].Errors[0].ErrorMessage
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="/Clients" class="btn btn-secondary">Back</a>
+
+    </form>
+
+</div>
+    
