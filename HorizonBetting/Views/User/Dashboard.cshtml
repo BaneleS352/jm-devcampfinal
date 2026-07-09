@@ -1,0 +1,204 @@
+@model HorizonBetting.Models.User
+
+@{
+    ViewData["Title"] = "User Dashboard";
+    decimal totalBalance = Model?.Accounts?.Sum(a => a.OutstandingBalance) ?? 0;
+    int activeAccounts = Model?.Accounts?.Count ?? 0;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1 text-light">Welcome back, @(Model?.FirstName ?? "User")!</h2>
+        <p class="text-secondary mb-0">Here's what's happening with your accounts today.</p>
+    </div>
+    <div>
+        <span class="badge bg-success-subtle px-3 py-2">
+            <i class="bi bi-circle-fill text-success-neon" style="font-size: 0.5rem; vertical-align: middle; margin-right: 6px;"></i>
+            Status: Active
+        </span>
+    </div>
+</div>
+
+<!-- Key Metrics Grid -->
+<div class="row mb-4">
+    <div class="col-md-4 mb-3 mb-md-0">
+        <div class="hb-card h-100 mb-0">
+            <div class="hb-card-body d-flex flex-column justify-content-between h-100">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="text-secondary small text-uppercase fw-bold mb-1">Total Balance</p>
+                        <h3 class="mb-0 text-success-neon tabular-data">R @totalBalance.ToString("0.00")</h3>
+                    </div>
+                    <div class="rounded p-2" style="background: rgba(0, 230, 118, 0.1);">
+                        <i class="bi bi-wallet2 text-success-neon fs-4"></i>
+                    </div>
+                </div>
+                <!-- Sparkline Mockup using SVG -->
+                <svg viewBox="0 0 100 30" class="w-100" style="height: 40px; overflow: visible;">
+                    <path d="M0 25 Q 10 20 20 25 T 40 15 T 60 20 T 80 5 T 100 10" fill="none" stroke="var(--accent-success)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M0 25 Q 10 20 20 25 T 40 15 T 60 20 T 80 5 T 100 10 L 100 30 L 0 30 Z" fill="url(#grad-success)" stroke="none" opacity="0.3"/>
+                    <defs>
+                        <linearGradient id="grad-success" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="var(--accent-success)"/>
+                            <stop offset="100%" stop-color="transparent"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-3 mb-md-0">
+        <div class="hb-card h-100 mb-0">
+            <div class="hb-card-body d-flex flex-column justify-content-between h-100">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="text-secondary small text-uppercase fw-bold mb-1">Active Accounts</p>
+                        <h3 class="mb-0 tabular-data text-primary-neon">@activeAccounts</h3>
+                    </div>
+                    <div class="rounded p-2" style="background: rgba(144, 89, 255, 0.1);">
+                        <i class="bi bi-collection text-primary-neon fs-4"></i>
+                    </div>
+                </div>
+                <svg viewBox="0 0 100 30" class="w-100" style="height: 40px; overflow: visible;">
+                    <path d="M0 15 Q 15 5 30 15 T 60 15 T 80 20 T 100 10" fill="none" stroke="var(--accent-primary)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M0 15 Q 15 5 30 15 T 60 15 T 80 20 T 100 10 L 100 30 L 0 30 Z" fill="url(#grad-primary)" stroke="none" opacity="0.3"/>
+                    <defs>
+                        <linearGradient id="grad-primary" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="var(--accent-primary)"/>
+                            <stop offset="100%" stop-color="transparent"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="hb-card h-100 mb-0">
+            <div class="hb-card-body d-flex flex-column justify-content-between h-100">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="text-secondary small text-uppercase fw-bold mb-1">Recent Activity</p>
+                        <h3 class="mb-0 tabular-data text-info">High</h3>
+                    </div>
+                    <div class="rounded p-2" style="background: rgba(0, 229, 255, 0.1);">
+                        <i class="bi bi-activity text-info fs-4"></i>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end h-100 pb-2">
+                    <div class="d-flex gap-1 align-items-end w-100" style="height: 30px;">
+                        <div style="width: 15%; height: 40%; background: var(--accent-info); border-radius: 2px;"></div>
+                        <div style="width: 15%; height: 70%; background: var(--accent-info); border-radius: 2px;"></div>
+                        <div style="width: 15%; height: 50%; background: var(--accent-info); border-radius: 2px;"></div>
+                        <div style="width: 15%; height: 90%; background: var(--accent-info); border-radius: 2px;"></div>
+                        <div style="width: 15%; height: 60%; background: var(--accent-info); border-radius: 2px;"></div>
+                        <div style="width: 15%; height: 100%; background: var(--accent-info); border-radius: 2px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Accounts List -->
+    <div class="col-lg-5 mb-4 mb-lg-0">
+        <div class="hb-card h-100 mb-0">
+            <div class="hb-card-header">
+                My Accounts
+            </div>
+            <div class="hb-card-body p-0">
+                @if (Model != null && Model.Accounts != null && Model.Accounts.Any())
+                {
+                    <div class="list-group list-group-flush rounded-bottom border-0">
+                        @foreach (var account in Model.Accounts)
+                        {
+                            <div class="list-group-item bg-transparent border-bottom p-4 d-flex justify-content-between align-items-center" style="border-color: var(--border-subtle) !important;">
+                                <div>
+                                    <div class="fw-bold mb-1 text-light">@account.AccountNumber</div>
+                                    <small class="text-secondary">Opened: Recently</small>
+                                </div>
+                                <div class="text-end">
+                                    <div class="fw-bold fs-5 tabular-data @(account.OutstandingBalance > 0 ? "text-success-neon" : account.OutstandingBalance < 0 ? "text-danger-neon" : "")">
+                                        R @account.OutstandingBalance.ToString("0.00")
+                                    </div>
+                                    <span class="badge bg-success-subtle mt-1">Active</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="p-5 text-center text-secondary">
+                        <i class="bi bi-wallet fs-1 mb-3 text-muted"></i>
+                        <p>No accounts found.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="col-lg-7">
+        <div class="hb-card h-100 mb-0">
+            <div class="hb-card-header d-flex justify-content-between align-items-center">
+                <span>Recent Transactions</span>
+                <i class="bi bi-three-dots text-muted"></i>
+            </div>
+            <div class="hb-card-body p-0 table-responsive">
+                @{
+                    var recentTransactions = Model?.Accounts?
+                        .SelectMany(a => a.Transactions)
+                        .OrderByDescending(t => t.TransactionDate)
+                        .Take(10)
+                        .ToList() ?? new List<HorizonBetting.Models.Transaction>();
+                }
+
+                @if (recentTransactions.Any())
+                {
+                    <table class="hb-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Account</th>
+                                <th>Type</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var t in recentTransactions)
+                            {
+                                <tr>
+                                    <td class="text-secondary tabular-data">@t.TransactionDate.ToString("MMM dd, HH:mm")</td>
+                                    <td class="fw-medium text-light">@t.Account.AccountNumber</td>
+                                    <td>
+                                        @if (t.Amount > 0)
+                                        {
+                                            <span class="badge bg-success-subtle"><i class="bi bi-arrow-up-right me-1"></i>Credit</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger-subtle"><i class="bi bi-arrow-down-left me-1"></i>Debit</span>
+                                        }
+                                    </td>
+                                    <td class="text-end fw-bold tabular-data @(t.Amount > 0 ? "text-success-neon" : "text-danger-neon")">
+                                        @(t.Amount > 0 ? "+" : "")@t.Amount.ToString("0.00")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="p-5 text-center text-secondary">
+                        <i class="bi bi-receipt fs-1 mb-3 text-muted"></i>
+                        <p>No recent transactions.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

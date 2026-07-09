@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="py-5 text-center position-relative">
+    <div class="position-absolute top-50 start-50 translate-middle" style="width: 300px; height: 300px; background: var(--accent-glow); opacity: 0.15; filter: blur(100px); border-radius: 50%; z-index: 0; pointer-events: none;"></div>
+    
+    <div class="position-relative z-1 mb-5">
+        <h1 class="display-3 fw-bolder mb-3 text-light" style="letter-spacing: -1px;">
+            WELCOME TO <span style="color: var(--accent-glow); text-shadow: var(--shadow-yellow-glow);">HORIZON BETTING</span>
+        </h1>
+        <p class="lead text-secondary mx-auto" style="max-width: 600px;">
+            Experience the thrill of the game with the most advanced, secure, and premium betting account management platform.
+        </p>
+    </div>
+    
+    <div class="row justify-content-center g-4 position-relative z-1">
+        <div class="col-md-5">
+            <div class="hb-card h-100 p-4" style="transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';">
+                <div class="hb-card-body text-center">
+                    <div class="mb-4 d-inline-flex justify-content-center align-items-center rounded-circle" style="width: 64px; height: 64px; background: rgba(255, 215, 0, 0.1);">
+                        <i class="bi bi-shield-lock-fill fs-1" style="color: var(--accent-glow);"></i>
+                    </div>
+                    <h3 class="fw-bold text-light mb-3">Admin Portal</h3>
+                    <p class="text-secondary mb-4">Manage users, oversee accounts, and capture transactions with ease and enterprise-grade precision.</p>
+                    <a asp-controller="Admin" asp-action="UserList" class="btn btn-outline-warning w-100 rounded-pill fw-bold" style="border-color: var(--accent-glow); color: var(--accent-glow);">Enter Admin View</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-5">
+            <div class="hb-card h-100 p-4" style="transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';">
+                <div class="hb-card-body text-center">
+                    <div class="mb-4 d-inline-flex justify-content-center align-items-center rounded-circle" style="width: 64px; height: 64px; background: rgba(144, 89, 255, 0.1);">
+                        <i class="bi bi-wallet2 fs-1 text-primary-neon"></i>
+                    </div>
+                    <h3 class="fw-bold text-light mb-3">User Dashboard</h3>
+                    <p class="text-secondary mb-4">View your personal betting accounts, outstanding balances, and recent transaction history in real-time.</p>
+                    <a asp-controller="User" asp-action="Dashboard" class="btn btn-primary w-100 rounded-pill fw-bold" style="background: var(--accent-primary); border: none;">Enter User View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

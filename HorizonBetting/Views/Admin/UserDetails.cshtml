@@ -1,0 +1,76 @@
+@model HorizonBetting.Models.User
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<div class="mb-3 d-flex justify-content-between align-items-center">
+    <a asp-action="UserList" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to Users</a>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="hb-card">
+            <div class="hb-card-header">
+                User Profile
+            </div>
+            <div class="hb-card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 text-muted">Name</dt>
+                    <dd class="col-sm-8">@Model.FirstName @Model.Surname</dd>
+                    
+                    <dt class="col-sm-4 text-muted">ID Number</dt>
+                    <dd class="col-sm-8">@Model.IdNumber</dd>
+                    
+                    <dt class="col-sm-4 text-muted">Email</dt>
+                    <dd class="col-sm-8">@Model.Email</dd>
+                </dl>
+                <hr class="border-secondary" />
+                <a asp-action="EditUser" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm w-100">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="hb-card">
+            <div class="hb-card-header d-flex justify-content-between align-items-center">
+                <span>Linked Accounts</span>
+                <a asp-action="CreateAccount" asp-route-userId="@Model.Id" class="btn btn-warning btn-sm"><i class="bi bi-plus-circle me-1"></i> Add Account</a>
+            </div>
+            <div class="hb-card-body">
+                @if (Model.Accounts.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table hb-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Account Number</th>
+                                    <th>Outstanding Balance</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var account in Model.Accounts)
+                                {
+                                    <tr>
+                                        <td><strong>@account.AccountNumber</strong></td>
+                                        <td class="@(account.OutstandingBalance < 0 ? "text-danger" : "text-success") fw-bold">
+                                            R @account.OutstandingBalance.ToString("0.00")
+                                        </td>
+                                        <td class="text-end">
+                                            <a asp-action="AccountDetails" asp-route-id="@account.Id" class="btn btn-sm btn-info text-white">Manage</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted text-center mb-0">No accounts linked to this user yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

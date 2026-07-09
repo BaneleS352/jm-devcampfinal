@@ -1,0 +1,88 @@
+@model IEnumerable<HorizonBetting.Models.User>
+
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1 text-light">User Management</h2>
+        <p class="text-secondary mb-0">Manage registered users, their accounts, and transactions.</p>
+    </div>
+    <div>
+        <a asp-action="CreateUser" class="btn btn-primary"><i class="bi bi-person-plus-fill me-2"></i>New User</a>
+    </div>
+</div>
+
+<div class="hb-card">
+    <div class="hb-card-header d-flex justify-content-between align-items-center">
+        <span>Active Users Directory</span>
+        <span class="badge bg-primary-subtle text-primary-neon">@Model.Count() Total</span>
+    </div>
+    <div class="hb-card-body p-0">
+        <div class="p-4 border-bottom border-secondary" style="border-color: var(--border-subtle) !important;">
+            <form asp-action="UserList" method="get" class="row g-3 align-items-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0" style="border-color: var(--border-subtle);"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" name="searchString" id="searchString" class="form-control border-start-0" placeholder="Search ID or Surname..." style="border-color: var(--border-subtle);">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary me-2">Filter</button>
+                    <a asp-action="UserList" class="btn btn-outline-secondary text-light border-0">Clear</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="hb-table mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">ID Number</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var item in Model) {
+                        <tr>
+                            <td class="tabular-data text-secondary ps-4">@item.IdNumber</td>
+                            <td class="fw-medium text-light">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="rounded-circle bg-secondary d-flex justify-content-center align-items-center" style="width: 32px; height: 32px;">
+                                        <i class="bi bi-person text-light"></i>
+                                    </div>
+                                    @item.FirstName @item.Surname
+                                </div>
+                            </td>
+                            <td class="text-secondary">@item.Email</td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group border border-secondary rounded" style="border-color: var(--border-subtle) !important;">
+                                    <a asp-action="UserDetails" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary border-0 text-light" title="View Details"><i class="bi bi-eye"></i></a>
+                                    <a asp-action="EditUser" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary border-0 text-light border-start border-end" style="border-color: var(--border-subtle) !important;" title="Edit"><i class="bi bi-pencil"></i></a>
+                                    <form asp-action="DeleteUser" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Delete this user? This cannot be undone.');">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary border-0 text-danger-neon" title="Delete"><i class="bi bi-trash"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center p-5 text-secondary">
+                                <i class="bi bi-people fs-1 d-block mb-3 text-muted"></i>
+                                No users match your search criteria.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

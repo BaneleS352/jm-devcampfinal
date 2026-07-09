@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HorizonBetting</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Adding Google Fonts for a modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HorizonBetting.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="layout-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a class="sidebar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-hexagon-fill"></i> <span class="sidebar-brand-text">HorizonBetting</span>
+                </a>
+                <button type="button" class="sidebar-toggle d-none d-md-flex" id="sidebarToggle" aria-label="Collapse sidebar" title="Collapse sidebar">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item-premium @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-house-door"></i> <span class="nav-item-text">Overview</span>
+                </a>
+                <div class="nav-section-title text-muted small fw-bold mt-3 mb-2 px-3 text-uppercase" style="letter-spacing: 1px;">Portals</div>
+                <a class="nav-item-premium @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Admin" ? "active" : "")" asp-area="" asp-controller="Admin" asp-action="UserList">
+                    <i class="bi bi-shield-lock"></i> <span class="nav-item-text">Admin Portal</span>
+                </a>
+                <a class="nav-item-premium @(ViewContext.RouteData.Values["Controller"]?.ToString() == "User" ? "active" : "")" asp-area="" asp-controller="User" asp-action="Dashboard">
+                    <i class="bi bi-person-badge"></i> <span class="nav-item-text">User Dashboard</span>
+                </a>
+                <div class="nav-section-title text-muted small fw-bold mt-3 mb-2 px-3 text-uppercase" style="letter-spacing: 1px;">System</div>
+                <a class="nav-item-premium @(ViewContext.RouteData.Values["Action"]?.ToString() == "About" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="About">
+                    <i class="bi bi-info-circle"></i> <span class="nav-item-text">About</span>
+                </a>
+                <a class="nav-item-premium @(ViewContext.RouteData.Values["Action"]?.ToString() == "Contact" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Contact">
+                    <i class="bi bi-envelope"></i> <span class="nav-item-text">Contact Support</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-outline-secondary d-md-none border-0" type="button" onclick="document.getElementById('sidebar').classList.toggle('show')">
+                        <i class="bi bi-list fs-4"></i>
+                    </button>
+                </div>
+                <div class="d-flex align-items-center gap-4">
+                    <a href="#" class="text-secondary hover-primary"><i class="bi bi-bell fs-5"></i></a>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="rounded-circle d-flex justify-content-center align-items-center" style="width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-primary), #6633cc);">
+                            <i class="bi bi-person-fill text-white"></i>
+                        </div>
+                        <span class="fw-medium text-light d-none d-sm-inline">System Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger border-0 bg-danger-subtle text-danger-neon alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["ErrorMessage"]
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success border-0 bg-success-subtle text-success-neon alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            
+            if (sidebar && toggleBtn) {
+                const toggleIcon = toggleBtn.querySelector('i');
+                const updateToggleState = () => {
+                    const collapsed = sidebar.classList.contains('collapsed');
+                    toggleBtn.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+                    toggleBtn.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+                    if (toggleIcon) {
+                        toggleIcon.className = collapsed ? 'bi bi-chevron-right' : 'bi bi-chevron-left';
+                    }
+                };
+                const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+                if (isCollapsed) {
+                    sidebar.classList.add('collapsed');
+                }
+                updateToggleState();
+
+                toggleBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('collapsed');
+                    localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+                    updateToggleState();
+                });
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
