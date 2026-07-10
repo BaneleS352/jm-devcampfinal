@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HorizonBetting")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1d49be586c8551ee3a12ab2a838d2807c363a04")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+faac51b5df495fb0f0d4df57ec0600bfc4e2c2fb")]
 [assembly: System.Reflection.AssemblyProductAttribute("HorizonBetting")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HorizonBetting")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
